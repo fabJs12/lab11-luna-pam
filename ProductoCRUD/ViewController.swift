@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var tablaProductos: UITableView!
 
@@ -45,6 +45,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let precio = String(format: "S/ %.2f", producto.precio)
         let stock = producto.stock
         cell.detailTextLabel?.text = "Categoría: \(categoria) - Precio: \(precio) - Stock: \(stock)"
+        
+        cell.layer.cornerRadius = 12
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.layer.shadowRadius = 4
+        cell.layer.shadowOpacity = 0.1
+        cell.layer.masksToBounds = false
+        
         return cell
     }
 
@@ -57,26 +65,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         alerta.addTextField { (tf) in
             tf.placeholder = "Precio"
             tf.keyboardType = .decimalPad
+            tf.delegate = self
         }
         alerta.addTextField { (tf) in
             tf.placeholder = "Stock"
             tf.keyboardType = .numberPad
+            tf.delegate = self
         }
         alerta.addTextField { (tf) in
             tf.placeholder = "Categoría"
         }
         
         let accionGuardar = UIAlertAction(title: "Guardar", style: .default) { _ in
-            let nombre = alerta.textFields?[0].text ?? ""
-            let precioText = alerta.textFields?[1].text ?? ""
-            let stockText = alerta.textFields?[2].text ?? ""
-            let categoria = alerta.textFields?[3].text ?? ""
+            guard let nombre = alerta.textFields?[0].text, !nombre.isEmpty,
+                  let precioText = alerta.textFields?[1].text?.replacingOccurrences(of: ",", with: "."), !precioText.isEmpty,
+                  let precio = Double(precioText),
+                  let stockText = alerta.textFields?[2].text, !stockText.isEmpty,
+                  let stock = Int16(stockText),
+                  let categoria = alerta.textFields?[3].text, !categoria.isEmpty else {
+                return
+            }
             
             let contexto = self.conexion()
             let nuevoProducto = Producto(context: contexto)
             nuevoProducto.nombre = nombre
-            nuevoProducto.precio = Double(precioText) ?? 0.0
-            nuevoProducto.stock = Int16(stockText) ?? 0
+            nuevoProducto.precio = precio
+            nuevoProducto.stock = stock
             nuevoProducto.categoria = categoria
             
             do {
@@ -122,11 +136,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tf.text = String(producto.precio)
             tf.placeholder = "Precio"
             tf.keyboardType = .decimalPad
+            tf.delegate = self
         }
         alerta.addTextField { (tf) in
             tf.text = String(producto.stock)
             tf.placeholder = "Stock"
             tf.keyboardType = .numberPad
+            tf.delegate = self
         }
         alerta.addTextField { (tf) in
             tf.text = producto.categoria
@@ -134,15 +150,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let accionActualizar = UIAlertAction(title: "Actualizar", style: .default) { _ in
-            let nombre = alerta.textFields?[0].text ?? ""
-            let precioText = alerta.textFields?[1].text ?? ""
-            let stockText = alerta.textFields?[2].text ?? ""
-            let categoria = alerta.textFields?[3].text ?? ""
+            guard let nombre = alerta.textFields?[0].text, !nombre.isEmpty,
+                  let precioText = alerta.textFields?[1].text?.replacingOccurrences(of: ",", with: "."), !precioText.isEmpty,
+                  let precio = Double(precioText),
+                  let stockText = alerta.textFields?[2].text, !stockText.isEmpty,
+                  let stock = Int16(stockText),
+                  let categoria = alerta.textFields?[3].text, !categoria.isEmpty else {
+                return
+            }
             
             let contexto = self.conexion()
             producto.nombre = nombre
-            producto.precio = Double(precioText) ?? 0.0
-            producto.stock = Int16(stockText) ?? 0
+            producto.precio = precio
+            producto.stock = stock
             producto.categoria = categoria
             
             do {
@@ -160,5 +180,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         present(alerta, animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.isEmpty {
+            return true
+        }
+        if textField.keyboardType == .numberPad {
+            let allowedCharacters = CharacterSet.decimalDigits
+            let characterSet = CharacterSet(charactersIn: string)
+            return allowedCharacters.isSuperset(of: characterSet)
+        } else if textField.keyboardType == .decimalPad {
+            let allowedCharacters = CharacterSet(charactersIn: "0123456789.,")
+            let characterSet = CharacterSet(charactersIn: string)
+            if !allowedCharacters.isSuperset(of: characterSet) {
+                return false
+            }
+            let currentText = textField.text ?? ""
+            if (string == "." || string == ",") && (currentText.contains(".") || currentText.contains(",")) {
+                return false
+            }
+            return true
+        }
+        return true
     }
 }
