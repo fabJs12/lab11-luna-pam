@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedVersion="1" userDefinedModelVersion="" systemVersion="11A511" minimumToolsVersion="Automatic" sourceLanguage="Swift">
+    <entity name="Producto" codeGenerationType="class" representedClassName="Producto" syncable="YES">
+        <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nombre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="precio" optional="NO" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="stock" optional="NO" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+</model>
