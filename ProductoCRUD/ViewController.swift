@@ -75,7 +75,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 12
+        return 8
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -84,14 +84,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return headerView
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 76
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let producto = productosFiltrados[indexPath.section]
+        
         cell.textLabel?.text = producto.nombre
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        
         let categoria = producto.categoria ?? ""
         let precio = String(format: "S/ %.2f", producto.precio)
         let stock = producto.stock
-        cell.detailTextLabel?.text = "Categoría: \(categoria) - Precio: \(precio) - Stock: \(stock)"
+        
+        let part1 = "Categoría: \(categoria)  "
+        let part2 = "Precio: \(precio)"
+        let part3 = "  Stock: \(stock)"
+        let fullText = "\(part1)\(part2)\(part3)"
+        
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let grayAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.gray
+        ]
+        let bluePremiumAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(red: 0.0, green: 0.29, blue: 0.53, alpha: 1.0),
+            .font: UIFont.boldSystemFont(ofSize: 14)
+        ]
+        
+        attributedString.addAttributes(grayAttributes, range: NSRange(location: 0, length: fullText.count))
+        let rangePrecio = (fullText as NSString).range(of: part2)
+        if rangePrecio.location != NSNotFound {
+            attributedString.addAttributes(bluePremiumAttributes, range: rangePrecio)
+        }
+        
+        cell.detailTextLabel?.attributedText = attributedString
         
         cell.backgroundColor = .clear
         
@@ -103,7 +131,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.contentView.layer.shadowOpacity = 0.1
         cell.contentView.layer.masksToBounds = false
         
-        cell.accessoryType = .disclosureIndicator
+        cell.accessoryType = .none
         cell.imageView?.image = UIImage(systemName: "tag.fill")
         cell.imageView?.tintColor = UIColor(red: 0.0, green: 0.29, blue: 0.53, alpha: 1.0)
         
