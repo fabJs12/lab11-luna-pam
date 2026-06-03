@@ -1,16 +1,25 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var tablaProductos: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
 
     var productos = [Producto]()
+    var productosFiltrados = [Producto]()
+    var estaBuscando = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.98, alpha: 1.0)
+        
         tablaProductos.delegate = self
         tablaProductos.dataSource = self
+        searchBar.delegate = self
+        
+        searchBar.placeholder = "Buscar producto..."
+        searchBar.backgroundImage = UIImage()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -27,19 +36,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let fetchRequest: NSFetchRequest<Producto> = Producto.fetchRequest()
         do {
             productos = try contexto.fetch(fetchRequest)
-            tablaProductos.reloadData()
+            filtrarProductos(conTexto: searchBar.text ?? "")
         } catch {
             print("Error al leer productos: \(error)")
         }
     }
 
+    func filtrarProductos(conTexto texto: String) {
+        let cleanTexto = texto.trimmingCharacters(in: .whitespacesAndNewlines)
+        if cleanTexto.isEmpty {
+            estaBuscando = false
+            productosFiltrados = productos
+        } else {
+            estaBuscando = true
+            productosFiltrados = productos.filter { prod in
+                let nombreCoincide = (prod.nombre ?? "").range(of: cleanTexto, options: .caseInsensitive) != nil
+                let categoriaCoincide = (prod.categoria ?? "").range(of: cleanTexto, options: .caseInsensitive) != nil
+                return nombreCoincide || categoriaCoincide
+            }
+        }
+        tablaProductos.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filtrarProductos(conTexto: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productos.count
+        return productosFiltrados.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let producto = productos[indexPath.row]
+        let producto = productosFiltrados[indexPath.row]
         cell.textLabel?.text = producto.nombre
         let categoria = producto.categoria ?? ""
         let precio = String(format: "S/ %.2f", producto.precio)
@@ -56,106 +89,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
 
-    @IBAction func agregarProducto(_ sender: UIBarButtonItem) {
-        let alerta = UIAlertController(title: "Nuevo Producto", message: "Ingrese los datos del producto", preferredStyle: .alert)
-        
-        alerta.addTextField { (tf) in
-            tf.placeholder = "Nombre"
-        }
-        alerta.addTextField { (tf) in
-            tf.placeholder = "Precio"
-            tf.keyboardType = .decimalPad
-            tf.delegate = self
-        }
-        alerta.addTextField { (tf) in
-            tf.placeholder = "Stock"
-            tf.keyboardType = .numberPad
-            tf.delegate = self
-        }
-        alerta.addTextField { (tf) in
-            tf.placeholder = "Categoría"
-        }
-        
-        let accionGuardar = UIAlertAction(title: "Guardar", style: .default) { _ in
-            let nombre = (alerta.textFields?[0].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            let precioRaw = (alerta.textFields?[1].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            let stockRaw = (alerta.textFields?[2].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            let categoria = (alerta.textFields?[3].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            guard !nombre.isEmpty else {
-                print("Error: El campo nombre está vacío")
-                return
-            }
-            
-            guard !precioRaw.isEmpty else {
-                print("Error: El campo precio está vacío")
-                return
-            }
-            
-            let formatter = NumberFormatter()
-            formatter.locale = Locale.current
-            formatter.numberStyle = .decimal
-            
-            var precioDouble: Double? = formatter.number(from: precioRaw)?.doubleValue
-            if precioDouble == nil {
-                let cleanDot = precioRaw.replacingOccurrences(of: ",", with: ".")
-                precioDouble = Double(cleanDot)
-            }
-            
-            guard let precio = precioDouble else {
-                print("Error: El campo precio no es un número válido")
-                return
-            }
-            
-            guard !stockRaw.isEmpty else {
-                print("Error: El campo stock está vacío")
-                return
-            }
-            
-            guard let stock = Int16(stockRaw) else {
-                print("Error: El campo stock no es un número entero de 16 bits válido")
-                return
-            }
-            
-            guard !categoria.isEmpty else {
-                print("Error: El campo categoría está vacío")
-                return
-            }
-            
-            let contexto = self.conexion()
-            let nuevoProducto = Producto(context: contexto)
-            nuevoProducto.nombre = nombre
-            nuevoProducto.precio = precio
-            nuevoProducto.stock = stock
-            nuevoProducto.categoria = categoria
-            
-            do {
-                try contexto.save()
-                DispatchQueue.main.async {
-                    self.leerProductos()
-                    self.tablaProductos.reloadData()
-                }
-            } catch {
-                print("Error al guardar: \(error)")
-            }
-        }
-        
-        let accionCancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
-        
-        alerta.addAction(accionGuardar)
-        alerta.addAction(accionCancelar)
-        
-        present(alerta, animated: true, completion: nil)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let productoSeleccionado = productosFiltrados[indexPath.row]
+        performSegue(withIdentifier: "segueToDetail", sender: productoSeleccionado)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let contexto = conexion()
-            let producto = productos[indexPath.row]
+            let producto = productosFiltrados[indexPath.row]
             contexto.delete(producto)
             do {
                 try contexto.save()
-                productos.remove(at: indexPath.row)
+                if let index = productos.firstIndex(of: producto) {
+                    productos.remove(at: index)
+                }
+                productosFiltrados.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             } catch {
                 print("Error al borrar: \(error)")
@@ -163,123 +113,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let producto = productos[indexPath.row]
-        let alerta = UIAlertController(title: "Editar Producto", message: "Actualice los datos del producto", preferredStyle: .alert)
-        
-        alerta.addTextField { (tf) in
-            tf.text = producto.nombre
-            tf.placeholder = "Nombre"
-        }
-        alerta.addTextField { (tf) in
-            tf.text = String(producto.precio)
-            tf.placeholder = "Precio"
-            tf.keyboardType = .decimalPad
-            tf.delegate = self
-        }
-        alerta.addTextField { (tf) in
-            tf.text = String(producto.stock)
-            tf.placeholder = "Stock"
-            tf.keyboardType = .numberPad
-            tf.delegate = self
-        }
-        alerta.addTextField { (tf) in
-            tf.text = producto.categoria
-            tf.placeholder = "Categoría"
-        }
-        
-        let accionActualizar = UIAlertAction(title: "Actualizar", style: .default) { _ in
-            let nombre = (alerta.textFields?[0].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            let precioRaw = (alerta.textFields?[1].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            let stockRaw = (alerta.textFields?[2].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            let categoria = (alerta.textFields?[3].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            guard !nombre.isEmpty else {
-                print("Error: El campo nombre está vacío")
-                return
-            }
-            
-            guard !precioRaw.isEmpty else {
-                print("Error: El campo precio está vacío")
-                return
-            }
-            
-            let formatter = NumberFormatter()
-            formatter.locale = Locale.current
-            formatter.numberStyle = .decimal
-            
-            var precioDouble: Double? = formatter.number(from: precioRaw)?.doubleValue
-            if precioDouble == nil {
-                let cleanDot = precioRaw.replacingOccurrences(of: ",", with: ".")
-                precioDouble = Double(cleanDot)
-            }
-            
-            guard let precio = precioDouble else {
-                print("Error: El campo precio no es un número válido")
-                return
-            }
-            
-            guard !stockRaw.isEmpty else {
-                print("Error: El campo stock está vacío")
-                return
-            }
-            
-            guard let stock = Int16(stockRaw) else {
-                print("Error: El campo stock no es un número entero de 16 bits válido")
-                return
-            }
-            
-            guard !categoria.isEmpty else {
-                print("Error: El campo categoría está vacío")
-                return
-            }
-            
-            let contexto = self.conexion()
-            producto.nombre = nombre
-            producto.precio = precio
-            producto.stock = stock
-            producto.categoria = categoria
-            
-            do {
-                try contexto.save()
-                DispatchQueue.main.async {
-                    self.leerProductos()
-                    self.tablaProductos.reloadData()
-                }
-            } catch {
-                print("Error al actualizar: \(error)")
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToDetail" {
+            if let destVC = segue.destination as? DetalleProd_Controller,
+               let producto = sender as? Producto {
+                destVC.producto = producto
             }
         }
-        
-        let accionCancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
-        
-        alerta.addAction(accionActualizar)
-        alerta.addAction(accionCancelar)
-        
-        present(alerta, animated: true, completion: nil)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string.isEmpty {
-            return true
-        }
-        if textField.keyboardType == .numberPad {
-            let allowedCharacters = CharacterSet.decimalDigits
-            let characterSet = CharacterSet(charactersIn: string)
-            return allowedCharacters.isSuperset(of: characterSet)
-        } else if textField.keyboardType == .decimalPad {
-            let allowedCharacters = CharacterSet(charactersIn: "0123456789.,")
-            let characterSet = CharacterSet(charactersIn: string)
-            if !allowedCharacters.isSuperset(of: characterSet) {
-                return false
-            }
-            let currentText = textField.text ?? ""
-            if (string == "." || string == ",") && (currentText.contains(".") || currentText.contains(",")) {
-                return false
-            }
-            return true
-        }
-        return true
     }
 }

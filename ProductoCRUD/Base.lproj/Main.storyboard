@@ -14,33 +14,79 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="y70-c1-3U2">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.29411764705882354" blue="0.52941176470588236" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <navigationBarAppearance key="standardAppearance">
-                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <textAttributes key="titleTextAttributes">
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </textAttributes>
-                        </navigationBarAppearance>
-                        <navigationBarAppearance key="scrollEdgeAppearance">
-                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <textAttributes key="titleTextAttributes">
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </textAttributes>
-                        </navigationBarAppearance>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="VUw-jc-0yf"/>
+                        <segue destination="wel-com-vc" kind="relationship" relationship="rootViewController" id="nav-root-segue"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eq9-QA-ai8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-600" y="100"/>
+        </scene>
+        <!-- Welcome View Controller -->
+        <scene sceneID="wel-scene-id">
+            <objects>
+                <viewController id="wel-com-vc" customClass="WelcomeViewController" customModule="ProductoCRUD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wel-bg-view">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="box.truck.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wel-logo">
+                                <rect key="frame" x="107" y="248" width="200" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.0" green="0.29411764709999999" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="w-logo-w"/>
+                                    <constraint firstAttribute="height" constant="200" id="h-logo-h"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Productos App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wel-title">
+                                <rect key="frame" x="20" y="478" width="374" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.29411764709999999" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wel-iniciar">
+                                <rect key="frame" x="40" y="742" width="334" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.29411764709999999" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="h-btn-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Ingresar">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="segueToList" id="segue-to-list-id"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wel-safe-area"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wel-logo" firstAttribute="centerX" secondItem="wel-bg-view" secondAttribute="centerX" id="c-logo-cx"/>
+                            <constraint firstItem="wel-logo" firstAttribute="top" secondItem="wel-safe-area" secondAttribute="top" constant="160" id="t-logo-t"/>
+                            <constraint firstItem="wel-title" firstAttribute="top" secondItem="wel-logo" secondAttribute="bottom" constant="30" id="t-title-t"/>
+                            <constraint firstItem="wel-safe-area" firstAttribute="trailing" secondItem="wel-title" secondAttribute="trailing" constant="20" id="r-title-r"/>
+                            <constraint firstItem="wel-title" firstAttribute="leading" secondItem="wel-safe-area" secondAttribute="leading" constant="20" id="l-title-l"/>
+                            <constraint firstItem="wel-safe-area" firstAttribute="bottom" secondItem="wel-iniciar" secondAttribute="bottom" constant="70" id="b-btn-b"/>
+                            <constraint firstItem="wel-iniciar" firstAttribute="leading" secondItem="wel-safe-area" secondAttribute="leading" constant="40" id="l-btn-l"/>
+                            <constraint firstItem="wel-safe-area" firstAttribute="trailing" secondItem="wel-iniciar" secondAttribute="trailing" constant="40" id="r-btn-r"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Bienvenida" id="wel-nav-item"/>
+                    <connections>
+                        <outlet property="iniciarButton" destination="wel-iniciar" id="out-btn-iniciar"/>
+                        <outlet property="logoImageView" destination="wel-logo" id="out-img-logo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wel-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="99.776785714285708"/>
         </scene>
         <!-- View Controller -->
         <scene sceneID="tne-QT-ifu">
@@ -50,8 +96,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="list-search">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="n7n-5M-Mug">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="51" width="414" height="811"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="a1b-cd-ef1" detailTextLabel="g2h-ij-kl3" style="IBUITableViewCellStyleSubtitle" id="Xyz-12-Abc">
@@ -79,36 +129,321 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="n7n-6M-Mug-DS"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="n7n-6M-Mug-DL"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.95686274509803915" green="0.96470588235294119" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="n7n-5M-Mug" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="C2U-V8-7Z6"/>
+                            <constraint firstItem="list-search" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="C2U-V-7Z6"/>
+                            <constraint firstItem="list-search" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Y9U-fK-M4y"/>
+                            <constraint firstItem="list-search" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="T1B-S4-Kj8"/>
+                            <constraint firstItem="n7n-5M-Mug" firstAttribute="top" secondItem="list-search" secondAttribute="bottom" id="C2U-V8-7Z6-2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="n7n-5M-Mug" secondAttribute="bottom" id="D3X-H9-XWf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="n7n-5M-Mug" secondAttribute="trailing" id="T1B-S4-Kj8"/>
-                            <constraint firstItem="n7n-5M-Mug" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Y9U-fK-M4y"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="n7n-5M-Mug" secondAttribute="trailing" id="T1B-S4-Kj8-2"/>
+                            <constraint firstItem="n7n-5M-Mug" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Y9U-fK-M4y-2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Productos" id="mND-Pq-5xT">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="p88-9w-Q8a">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="agregarProducto:" destination="BYZ-38-t0r" id="o8R-wR-2S1"/>
+                                <segue destination="add-pro-vc" kind="show" identifier="segueToAdd" id="segue-to-add-id"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="list-search" id="out-search-bar"/>
                         <outlet property="tablaProductos" destination="n7n-5M-Mug" id="s8N-L3-Kmg"/>
+                        <segue destination="det-pro-vc" kind="show" identifier="segueToDetail" id="segue-to-detail-id"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="99.776785714285708"/>
+            <point key="canvasLocation" x="862" y="100"/>
+        </scene>
+        <!-- Agregar Prod Controller -->
+        <scene sceneID="add-scene-id">
+            <objects>
+                <viewController id="add-pro-vc" customClass="AgregarProd_Controller" customModule="ProductoCRUD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="add-bg-view">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre del producto" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="add-tf-nombre">
+                                <rect key="frame" x="30" y="100" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-tf-n-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Precio (S/)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="add-tf-precio">
+                                <rect key="frame" x="30" y="175" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-tf-p-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Stock" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="add-tf-stock">
+                                <rect key="frame" x="30" y="250" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-tf-s-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Categoría" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="add-tf-categoria">
+                                <rect key="frame" x="30" y="325" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-tf-c-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="add-btn-guardar">
+                                <rect key="frame" x="30" y="420" width="354" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.29411764709999999" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="h-btn-g-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Guardar">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="guardarTapped:" destination="add-pro-vc" eventType="touchUpInside" id="btn-save-action"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="add-safe-area"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="add-safe-area" firstAttribute="trailing" secondItem="add-tf-nombre" secondAttribute="trailing" constant="30" id="r-tf-n-r"/>
+                            <constraint firstItem="add-tf-nombre" firstAttribute="leading" secondItem="add-safe-area" secondAttribute="leading" constant="30" id="l-tf-n-l"/>
+                            <constraint firstItem="add-tf-nombre" firstAttribute="top" secondItem="add-safe-area" secondAttribute="top" constant="56" id="t-tf-n-t"/>
+                            <constraint firstItem="add-safe-area" firstAttribute="trailing" secondItem="add-tf-precio" secondAttribute="trailing" constant="30" id="r-tf-p-r"/>
+                            <constraint firstItem="add-tf-precio" firstAttribute="leading" secondItem="add-safe-area" secondAttribute="leading" constant="30" id="l-tf-p-l"/>
+                            <constraint firstItem="add-tf-precio" firstAttribute="top" secondItem="add-tf-nombre" secondAttribute="bottom" constant="30" id="t-tf-p-t"/>
+                            <constraint firstItem="add-safe-area" firstAttribute="trailing" secondItem="add-tf-stock" secondAttribute="trailing" constant="30" id="r-tf-s-r"/>
+                            <constraint firstItem="add-tf-stock" firstAttribute="leading" secondItem="add-safe-area" secondAttribute="leading" constant="30" id="l-tf-s-l"/>
+                            <constraint firstItem="add-tf-stock" firstAttribute="top" secondItem="add-tf-precio" secondAttribute="bottom" constant="25" id="t-tf-s-t"/>
+                            <constraint firstItem="add-safe-area" firstAttribute="trailing" secondItem="add-tf-categoria" secondAttribute="trailing" constant="30" id="r-tf-c-r"/>
+                            <constraint firstItem="add-tf-categoria" firstAttribute="leading" secondItem="add-safe-area" secondAttribute="leading" constant="30" id="l-tf-c-l"/>
+                            <constraint firstItem="add-tf-categoria" firstAttribute="top" secondItem="add-tf-stock" secondAttribute="bottom" constant="25" id="t-tf-c-t"/>
+                            <constraint firstItem="add-safe-area" firstAttribute="trailing" secondItem="add-btn-guardar" secondAttribute="trailing" constant="30" id="r-btn-g-r"/>
+                            <constraint firstItem="add-btn-guardar" firstAttribute="leading" secondItem="add-safe-area" secondAttribute="leading" constant="30" id="l-btn-g-l"/>
+                            <constraint firstItem="add-btn-guardar" firstAttribute="top" secondItem="add-tf-categoria" secondAttribute="bottom" constant="50" id="t-btn-g-t"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Agregar Producto" id="add-nav-item"/>
+                    <connections>
+                        <outlet property="categoriaTextField" destination="add-tf-categoria" id="out-add-tf-cat"/>
+                        <outlet property="guardarButton" destination="add-btn-guardar" id="out-add-btn-save"/>
+                        <outlet property="nombreTextField" destination="add-tf-nombre" id="out-add-tf-nom"/>
+                        <outlet property="precioTextField" destination="add-tf-precio" id="out-add-tf-pre"/>
+                        <outlet property="stockTextField" destination="add-tf-stock" id="out-add-tf-sto"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="add-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1562" y="-250"/>
+        </scene>
+        <!-- Detalle Prod Controller -->
+        <scene sceneID="det-scene-id">
+            <objects>
+                <viewController id="det-pro-vc" customClass="DetalleProd_Controller" customModule="ProductoCRUD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="det-bg-view">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="det-logo">
+                                <rect key="frame" x="157" y="100" width="100" height="100"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="w-det-logo-w"/>
+                                    <constraint firstAttribute="height" constant="100" id="h-det-logo-h"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="det-card">
+                                <rect key="frame" x="30" y="240" width="354" height="240"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="det-lbl-nombre">
+                                        <rect key="frame" x="20" y="25" width="314" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Precio: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="det-lbl-precio">
+                                        <rect key="frame" x="20" y="76.5" width="314" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stock: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="det-lbl-stock">
+                                        <rect key="frame" x="20" y="127" width="314" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categoría: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="det-lbl-categoria">
+                                        <rect key="frame" x="20" y="177.5" width="314" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="det-lbl-nombre" secondAttribute="trailing" constant="20" id="r-det-l-n-r"/>
+                                    <constraint firstItem="det-lbl-nombre" firstAttribute="leading" secondItem="det-card" secondAttribute="leading" constant="20" id="l-det-l-n-l"/>
+                                    <constraint firstItem="det-lbl-nombre" firstAttribute="top" secondItem="det-card" secondAttribute="top" constant="25" id="t-det-l-n-t"/>
+                                    <constraint firstAttribute="trailing" secondItem="det-lbl-precio" secondAttribute="trailing" constant="20" id="r-det-l-p-r"/>
+                                    <constraint firstItem="det-lbl-precio" firstAttribute="leading" secondItem="det-card" secondAttribute="leading" constant="20" id="l-det-l-p-l"/>
+                                    <constraint firstItem="det-lbl-precio" firstAttribute="top" secondItem="det-lbl-nombre" secondAttribute="bottom" constant="30" id="t-det-l-p-t"/>
+                                    <constraint firstAttribute="trailing" secondItem="det-lbl-stock" secondAttribute="trailing" constant="20" id="r-det-l-s-r"/>
+                                    <constraint firstItem="det-lbl-stock" firstAttribute="leading" secondItem="det-card" secondAttribute="leading" constant="20" id="l-det-l-s-l"/>
+                                    <constraint firstItem="det-lbl-stock" firstAttribute="top" secondItem="det-lbl-precio" secondAttribute="bottom" constant="30" id="t-det-l-s-t"/>
+                                    <constraint firstAttribute="trailing" secondItem="det-lbl-categoria" secondAttribute="trailing" constant="20" id="r-det-l-c-r"/>
+                                    <constraint firstItem="det-lbl-categoria" firstAttribute="leading" secondItem="det-card" secondAttribute="leading" constant="20" id="l-det-l-c-l"/>
+                                    <constraint firstItem="det-lbl-categoria" firstAttribute="top" secondItem="det-lbl-stock" secondAttribute="bottom" constant="30" id="t-det-l-c-t"/>
+                                    <constraint firstAttribute="height" constant="240" id="h-det-card-h"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="det-btn-editar">
+                                <rect key="frame" x="30" y="530" width="354" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.29411764709999999" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="h-btn-e-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Editar">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="editarTapped:" destination="det-pro-vc" eventType="touchUpInside" id="btn-edit-action"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="det-safe-area"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="det-logo" firstAttribute="centerX" secondItem="det-bg-view" secondAttribute="centerX" id="c-det-logo-cx"/>
+                            <constraint firstItem="det-logo" firstAttribute="top" secondItem="det-safe-area" secondAttribute="top" constant="56" id="t-det-logo-t"/>
+                            <constraint firstItem="det-safe-area" firstAttribute="trailing" secondItem="det-card" secondAttribute="trailing" constant="30" id="r-det-card-r"/>
+                            <constraint firstItem="det-card" firstAttribute="leading" secondItem="det-safe-area" secondAttribute="leading" constant="30" id="l-det-card-l"/>
+                            <constraint firstItem="det-card" firstAttribute="top" secondItem="det-logo" secondAttribute="bottom" constant="40" id="t-det-card-t"/>
+                            <constraint firstItem="det-safe-area" firstAttribute="trailing" secondItem="det-btn-editar" secondAttribute="trailing" constant="30" id="r-btn-e-r"/>
+                            <constraint firstItem="det-btn-editar" firstAttribute="leading" secondItem="det-safe-area" secondAttribute="leading" constant="30" id="l-btn-e-l"/>
+                            <constraint firstItem="det-btn-editar" firstAttribute="top" secondItem="det-card" secondAttribute="bottom" constant="50" id="t-btn-e-t"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Detalle del Producto" id="det-nav-item"/>
+                    <connections>
+                        <outlet property="categoriaLabel" destination="det-lbl-categoria" id="out-det-lbl-cat"/>
+                        <outlet property="editarButton" destination="det-btn-editar" id="out-det-btn-edit"/>
+                        <outlet property="logoImageView" destination="det-logo" id="out-det-logo"/>
+                        <outlet property="nombreLabel" destination="det-lbl-nombre" id="out-det-lbl-nom"/>
+                        <outlet property="precioLabel" destination="det-lbl-precio" id="out-det-lbl-pre"/>
+                        <outlet property="stockLabel" destination="det-lbl-stock" id="out-det-lbl-sto"/>
+                        <outlet property="tarjetaView" destination="det-card" id="out-det-card"/>
+                        <segue destination="edi-pro-vc" kind="show" identifier="segueToEdit" id="segue-to-edit-id"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="det-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1562" y="450"/>
+        </scene>
+        <!-- Edit Prod Controller -->
+        <scene sceneID="edi-scene-id">
+            <objects>
+                <viewController id="edi-pro-vc" customClass="EditProd_Controller" customModule="ProductoCRUD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="edi-bg-view">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre del producto" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="edi-tf-nombre">
+                                <rect key="frame" x="30" y="100" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-edi-tf-n-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Precio (S/)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="edi-tf-precio">
+                                <rect key="frame" x="30" y="175" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-edi-tf-p-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Stock" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="edi-tf-stock">
+                                <rect key="frame" x="30" y="250" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-edi-tf-s-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Categoría" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="edi-tf-categoria">
+                                <rect key="frame" x="30" y="325" width="354" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h-edi-tf-c-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="edi-btn-actualizar">
+                                <rect key="frame" x="30" y="420" width="354" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.29411764709999999" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="h-edi-btn-a-h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Actualizar">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="actualizarTapped:" destination="edi-pro-vc" eventType="touchUpInside" id="btn-update-action"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="edi-safe-area"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="edi-safe-area" firstAttribute="trailing" secondItem="edi-tf-nombre" secondAttribute="trailing" constant="30" id="r-edi-tf-n-r"/>
+                            <constraint firstItem="edi-tf-nombre" firstAttribute="leading" secondItem="edi-safe-area" secondAttribute="leading" constant="30" id="l-edi-tf-n-l"/>
+                            <constraint firstItem="edi-tf-nombre" firstAttribute="top" secondItem="edi-safe-area" secondAttribute="top" constant="56" id="t-edi-tf-n-t"/>
+                            <constraint firstItem="edi-safe-area" firstAttribute="trailing" secondItem="edi-tf-precio" secondAttribute="trailing" constant="30" id="r-edi-tf-p-r"/>
+                            <constraint firstItem="edi-tf-precio" firstAttribute="leading" secondItem="edi-safe-area" secondAttribute="leading" constant="30" id="l-edi-tf-p-l"/>
+                            <constraint firstItem="edi-tf-precio" firstAttribute="top" secondItem="edi-tf-nombre" secondAttribute="bottom" constant="30" id="t-edi-tf-p-t"/>
+                            <constraint firstItem="edi-safe-area" firstAttribute="trailing" secondItem="edi-tf-stock" secondAttribute="trailing" constant="30" id="r-edi-tf-s-r"/>
+                            <constraint firstItem="edi-tf-stock" firstAttribute="leading" secondItem="edi-safe-area" secondAttribute="leading" constant="30" id="l-edi-tf-s-l"/>
+                            <constraint firstItem="edi-tf-stock" firstAttribute="top" secondItem="edi-tf-precio" secondAttribute="bottom" constant="25" id="t-edi-tf-s-t"/>
+                            <constraint firstItem="edi-safe-area" firstAttribute="trailing" secondItem="edi-tf-categoria" secondAttribute="trailing" constant="30" id="r-edi-tf-c-r"/>
+                            <constraint firstItem="edi-tf-categoria" firstAttribute="leading" secondItem="edi-safe-area" secondAttribute="leading" constant="30" id="l-edi-tf-c-l"/>
+                            <constraint firstItem="edi-tf-categoria" firstAttribute="top" secondItem="edi-tf-stock" secondAttribute="bottom" constant="25" id="t-edi-tf-c-t"/>
+                            <constraint firstItem="edi-safe-area" firstAttribute="trailing" secondItem="edi-btn-actualizar" secondAttribute="trailing" constant="30" id="r-btn-a-r"/>
+                            <constraint firstItem="edi-btn-actualizar" firstAttribute="leading" secondItem="edi-safe-area" secondAttribute="leading" constant="30" id="l-btn-a-l"/>
+                            <constraint firstItem="edi-btn-actualizar" firstAttribute="top" secondItem="edi-tf-categoria" secondAttribute="bottom" constant="50" id="t-btn-a-t"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Editar Producto" id="edi-nav-item"/>
+                    <connections>
+                        <outlet property="categoriaTextField" destination="edi-tf-categoria" id="out-edi-tf-cat"/>
+                        <outlet property="guardarButton" destination="edi-btn-actualizar" id="out-edi-btn-save"/>
+                        <outlet property="nombreTextField" destination="edi-tf-nombre" id="out-edi-tf-nom"/>
+                        <outlet property="precioTextField" destination="edi-tf-precio" id="out-edi-tf-pre"/>
+                        <outlet property="stockTextField" destination="edi-tf-stock" id="out-edi-tf-sto"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="edi-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2262" y="450"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="box.truck.fill" catalog="system" width="128" height="88"/>
+    </resources>
 </document>
