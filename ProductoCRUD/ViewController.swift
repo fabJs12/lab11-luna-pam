@@ -77,12 +77,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let accionGuardar = UIAlertAction(title: "Guardar", style: .default) { _ in
-            guard let nombre = alerta.textFields?[0].text, !nombre.isEmpty,
-                  let precioText = alerta.textFields?[1].text?.replacingOccurrences(of: ",", with: "."), !precioText.isEmpty,
-                  let precio = Double(precioText),
-                  let stockText = alerta.textFields?[2].text, !stockText.isEmpty,
-                  let stock = Int16(stockText),
-                  let categoria = alerta.textFields?[3].text, !categoria.isEmpty else {
+            let nombre = (alerta.textFields?[0].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            let precioRaw = (alerta.textFields?[1].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            let stockRaw = (alerta.textFields?[2].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            let categoria = (alerta.textFields?[3].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            guard !nombre.isEmpty else {
+                print("Error: El campo nombre está vacío")
+                return
+            }
+            
+            guard !precioRaw.isEmpty else {
+                print("Error: El campo precio está vacío")
+                return
+            }
+            
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.current
+            formatter.numberStyle = .decimal
+            
+            var precioDouble: Double? = formatter.number(from: precioRaw)?.doubleValue
+            if precioDouble == nil {
+                let cleanDot = precioRaw.replacingOccurrences(of: ",", with: ".")
+                precioDouble = Double(cleanDot)
+            }
+            
+            guard let precio = precioDouble else {
+                print("Error: El campo precio no es un número válido")
+                return
+            }
+            
+            guard !stockRaw.isEmpty else {
+                print("Error: El campo stock está vacío")
+                return
+            }
+            
+            guard let stock = Int16(stockRaw) else {
+                print("Error: El campo stock no es un número entero de 16 bits válido")
+                return
+            }
+            
+            guard !categoria.isEmpty else {
+                print("Error: El campo categoría está vacío")
                 return
             }
             
@@ -95,7 +131,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             do {
                 try contexto.save()
-                self.leerProductos()
+                DispatchQueue.main.async {
+                    self.leerProductos()
+                    self.tablaProductos.reloadData()
+                }
             } catch {
                 print("Error al guardar: \(error)")
             }
@@ -150,12 +189,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let accionActualizar = UIAlertAction(title: "Actualizar", style: .default) { _ in
-            guard let nombre = alerta.textFields?[0].text, !nombre.isEmpty,
-                  let precioText = alerta.textFields?[1].text?.replacingOccurrences(of: ",", with: "."), !precioText.isEmpty,
-                  let precio = Double(precioText),
-                  let stockText = alerta.textFields?[2].text, !stockText.isEmpty,
-                  let stock = Int16(stockText),
-                  let categoria = alerta.textFields?[3].text, !categoria.isEmpty else {
+            let nombre = (alerta.textFields?[0].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            let precioRaw = (alerta.textFields?[1].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            let stockRaw = (alerta.textFields?[2].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            let categoria = (alerta.textFields?[3].text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            guard !nombre.isEmpty else {
+                print("Error: El campo nombre está vacío")
+                return
+            }
+            
+            guard !precioRaw.isEmpty else {
+                print("Error: El campo precio está vacío")
+                return
+            }
+            
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.current
+            formatter.numberStyle = .decimal
+            
+            var precioDouble: Double? = formatter.number(from: precioRaw)?.doubleValue
+            if precioDouble == nil {
+                let cleanDot = precioRaw.replacingOccurrences(of: ",", with: ".")
+                precioDouble = Double(cleanDot)
+            }
+            
+            guard let precio = precioDouble else {
+                print("Error: El campo precio no es un número válido")
+                return
+            }
+            
+            guard !stockRaw.isEmpty else {
+                print("Error: El campo stock está vacío")
+                return
+            }
+            
+            guard let stock = Int16(stockRaw) else {
+                print("Error: El campo stock no es un número entero de 16 bits válido")
+                return
+            }
+            
+            guard !categoria.isEmpty else {
+                print("Error: El campo categoría está vacío")
                 return
             }
             
@@ -167,7 +242,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             do {
                 try contexto.save()
-                self.leerProductos()
+                DispatchQueue.main.async {
+                    self.leerProductos()
+                    self.tablaProductos.reloadData()
+                }
             } catch {
                 print("Error al actualizar: \(error)")
             }
